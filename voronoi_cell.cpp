@@ -20,16 +20,16 @@ const Array &VoronoiCell::get_neighbor_indices() const {
   return this->neighbor_indices;
 }
 
-void VoronoiCell::add_neighbor_index(int neighbor_index) {
-  this->neighbor_indices.push_back(neighbor_index);
+void set_neighbor_indices(const Array& neighbor_indices) {
+  this->neighbor_indices = neighbor_indices;
 }
 
 const Array &VoronoiCell::get_outline_points() const {
   return this->outline_points;
 }
 
-void VoronoiCell::add_outline_point(const Vector2 &point) {
-  this->outline_points.push_back(point);
+void set_outline_points(const Array &outline_points){
+  this->outline_points = outline_points;
 }
 
 const Vector2 &VoronoiCell::get_center() const { return this->center; }

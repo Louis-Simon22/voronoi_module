@@ -14,9 +14,9 @@ public:
   int get_cell_index() const;
   void set_cell_index(int cell_index);
   const Array &get_neighbor_indices() const;
-  void add_neighbor_index(int neighbor_index);
+  void set_neighbor_indices(const Array &neighbor_indices);
   const Array &get_outline_points() const;
-  void add_outline_point(const Vector2 &point);
+  void set_outline_points(const Array &outline_points);
   const Vector2 &get_center() const;
   void set_center(const Vector2 &center);
 

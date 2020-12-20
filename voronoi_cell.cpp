@@ -20,7 +20,7 @@ const Array &VoronoiCell::get_neighbor_indices() const {
   return this->neighbor_indices;
 }
 
-void set_neighbor_indices(const Array& neighbor_indices) {
+void VoronoiCell::set_neighbor_indices(const Array& neighbor_indices) {
   this->neighbor_indices = neighbor_indices;
 }
 
@@ -28,7 +28,7 @@ const Array &VoronoiCell::get_outline_points() const {
   return this->outline_points;
 }
 
-void set_outline_points(const Array &outline_points){
+void VoronoiCell::set_outline_points(const Array &outline_points){
   this->outline_points = outline_points;
 }
 

@@ -7,6 +7,7 @@ void Voronoi::_bind_methods() {
 }
 
 jcv_point Voronoi::convert(const Vector2 &vec) { return {vec[0], vec[1]}; }
+
 Vector2 Voronoi::convert(const jcv_point &point) {
   return Vector2(point.x, point.y);
 }
@@ -35,16 +36,18 @@ Array Voronoi::extract_voronoi_cells(const jcv_diagram &voronoiDiagram) {
     const auto &site = sites[i];
     const auto &center = convert(site.p);
     const auto *edge = site.edges;
-    auto neighbor_indices = Array();
     auto outline_points = Array();
+    auto neighbor_indices = Array();
     while (edge) {
-      // Check if edge is degenerate
+      // Check that edge is not degenerate
       if (!jcv_point_eq(&edge->pos[0], &edge->pos[1])) {
         const auto &center_relative_point = convert(edge->pos[0]) - center;
         outline_points.append(center_relative_point);
         const auto *neighbor = edge->neighbor;
         if (neighbor) {
           neighbor_indices.append(neighbor->index);
+        } else {
+          neighbor_indices.append(-1);
         }
       }
       edge = edge->next;

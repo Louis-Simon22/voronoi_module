@@ -7,6 +7,8 @@ void VoronoiCell::_bind_methods() {
                        &VoronoiCell::get_neighbor_indices);
   ClassDB::bind_method(D_METHOD("get_outline_points"),
                        &VoronoiCell::get_outline_points);
+  ClassDB::bind_method(D_METHOD("get_global_outline_points"),
+                       &VoronoiCell::get_global_outline_points);
   ClassDB::bind_method(D_METHOD("get_center"), &VoronoiCell::get_center);
 }
 
@@ -28,8 +30,16 @@ const Array &VoronoiCell::get_outline_points() const {
   return this->outline_points;
 }
 
+const Array &VoronoiCell::get_global_outline_points() const {
+  return this->global_outline_points;
+}
+
 void VoronoiCell::set_outline_points(const Array &outline_points){
   this->outline_points = outline_points;
+}
+
+void VoronoiCell::set_global_outline_points(const Array &global_outline_points){
+  this->global_outline_points = global_outline_points;
 }
 
 const Vector2 &VoronoiCell::get_center() const { return this->center; }

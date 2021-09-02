@@ -1,11 +1,12 @@
 #ifndef VORONOICELL_H
 #define VORONOICELL_H
 
-#include "core/reference.h"
+#include <core/object.h>
+#include <core/variant.h>
 
-class VoronoiCell : public Reference {
+class VoronoiCell : public Object {
 public:
-  GDCLASS(VoronoiCell, Reference);
+  GDCLASS(VoronoiCell, Object);
 
 protected:
   static void _bind_methods();

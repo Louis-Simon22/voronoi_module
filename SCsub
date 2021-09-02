@@ -1,7 +1,7 @@
 Import('env')
 
-env.add_source_files(env.modules_sources, "*.cpp")
-
-env.Append(CPPPATH=[
+module_env = env.Clone()
+module_env.add_source_files(env.modules_sources, "*.cpp")
+module_env.Append(CPPPATH=[
     "include/jc_voronoi/src"
 ])

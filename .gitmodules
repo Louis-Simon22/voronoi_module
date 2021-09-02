@@ -1,0 +1,3 @@
+[submodule "include/jc_voronoi"]
+	path = include/jc_voronoi
+	url = https://github.com/JCash/voronoi.git

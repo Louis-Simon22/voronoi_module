@@ -19,17 +19,17 @@ Vector<Variant> extract_voronoi_cells(const jcv_diagram &voronoiDiagram) {
 		const auto &site = sites[i];
 		const auto &center = convert(site.p);
 		const auto *edge = site.edges;
-		auto outline_points = Array();
-		auto global_outline_points = Array();
-		auto neighbor_indices = Array();
+		auto outline_points = PoolVector2Array();
+		auto global_outline_points = PoolVector2Array();
+		auto neighbor_indices = PoolIntArray();
 		while (edge) {
 			// Check that edge is not degenerate
 			if (!jcv_point_eq(&edge->pos[0], &edge->pos[1])) {
 				const auto global_point = convert(edge->pos[0]);
-				global_outline_points.append(global_point);
-				outline_points.append(global_point - center);
+				global_outline_points.push_back(global_point);
+				outline_points.push_back(global_point - center);
 				const auto *neighbor = edge->neighbor;
-				neighbor_indices.append(neighbor ? neighbor->index : -1);
+				neighbor_indices.push_back(neighbor ? neighbor->index : -1);
 			}
 			edge = edge->next;
 		}
@@ -52,7 +52,7 @@ void userfree(void* ctx, void* ptr) {
     return memfree(ptr);
 }
 
-Vector<Variant> Voronoi::generate_voronoi_cells(const Vector<Vector2> &points,
+Vector<Variant> Voronoi::generate_voronoi_cells(const PoolVector2Array &points,
                                       const Rect2 &extents) const {
   jcv_diagram voronoiDiagram;
   memset(&voronoiDiagram, 0, sizeof(jcv_diagram));

@@ -18,27 +18,27 @@ void VoronoiCell::set_cell_index(int cell_index) {
   this->cell_index = cell_index;
 }
 
-const Array &VoronoiCell::get_neighbor_indices() const {
+const PoolIntArray &VoronoiCell::get_neighbor_indices() const {
   return this->neighbor_indices;
 }
 
-void VoronoiCell::set_neighbor_indices(const Array& neighbor_indices) {
+void VoronoiCell::set_neighbor_indices(const PoolIntArray &neighbor_indices) {
   this->neighbor_indices = neighbor_indices;
 }
 
-const Array &VoronoiCell::get_outline_points() const {
+const PoolVector2Array &VoronoiCell::get_outline_points() const {
   return this->outline_points;
 }
 
-const Array &VoronoiCell::get_global_outline_points() const {
+const PoolVector2Array &VoronoiCell::get_global_outline_points() const {
   return this->global_outline_points;
 }
 
-void VoronoiCell::set_outline_points(const Array &outline_points){
+void VoronoiCell::set_outline_points(const PoolVector2Array &outline_points) {
   this->outline_points = outline_points;
 }
 
-void VoronoiCell::set_global_outline_points(const Array &global_outline_points){
+void VoronoiCell::set_global_outline_points(const PoolVector2Array &global_outline_points) {
   this->global_outline_points = global_outline_points;
 }
 

@@ -12,35 +12,37 @@ Vector2 convert(const jcv_point &point) {
   return Vector2(point.x, point.y);
 }
 
+struct VoronoiCellIndexComparator {
+	_FORCE_INLINE_ bool operator()(const Variant &a, const Variant &b) const {
+		const auto *cella = Object::cast_to<VoronoiCell>(a.operator Object *());
+		const auto *cellb = Object::cast_to<VoronoiCell>(b.operator Object *());
+		return cella->get_cell_index() < cellb->get_cell_index();
+	}
+};
+
 Vector<Variant> extract_voronoi_cells(const jcv_diagram &voronoiDiagram) {
 	auto voronoi_cells = Vector<Variant>();
 	const auto *sites = jcv_diagram_get_sites(&voronoiDiagram);
-	for (int i = 0; i < voronoiDiagram.numsites; ++i) {
+	for (int i = 0; i < voronoiDiagram.numsites; i++) {
 		const auto &site = sites[i];
 		const auto &center = convert(site.p);
 		const auto *edge = site.edges;
-		auto outline_points = PoolVector2Array();
-		auto global_outline_points = PoolVector2Array();
+		auto vertices_global = PoolVector2Array();
 		auto neighbor_indices = PoolIntArray();
 		while (edge) {
 			// Check that edge is not degenerate
 			if (!jcv_point_eq(&edge->pos[0], &edge->pos[1])) {
-				const auto global_point = convert(edge->pos[0]);
-				global_outline_points.push_back(global_point);
-				outline_points.push_back(global_point - center);
+				vertices_global.push_back(convert(edge->pos[0]));
 				const auto *neighbor = edge->neighbor;
 				neighbor_indices.push_back(neighbor ? neighbor->index : -1);
 			}
 			edge = edge->next;
 		}
-		auto *voronoi_cell = new VoronoiCell();
-		voronoi_cell->set_center(center);
-		voronoi_cell->set_cell_index(site.index);
-		voronoi_cell->set_neighbor_indices(neighbor_indices);
-		voronoi_cell->set_outline_points(outline_points);
-		voronoi_cell->set_global_outline_points(global_outline_points);
-		voronoi_cells.push_back(voronoi_cell);
+		voronoi_cells.push_back(new VoronoiCell(site.index, center, neighbor_indices, vertices_global));
 	}
+	// Sorting is required because the cell indices are based on the input points,
+	// not on the cell indices
+	voronoi_cells.sort_custom<VoronoiCellIndexComparator>();
 	return voronoi_cells;
 }
 
